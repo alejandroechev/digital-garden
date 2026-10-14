@@ -72,7 +72,7 @@ describe("a published note (AT-14)", () => {
   test("every photo, voice note and file it references is served", () => {
     const body = article("notas/sobre-jardines")
     const urls = [
-      ...selectAll("img, audio", body).map((n) => String(n.properties.src)),
+      ...selectAll("img, audio, video", body).map((n) => String(n.properties.src)),
       ...selectAll("a.internal", body).map((n) => String(n.properties.href)),
     ]
     assert.ok(selectAll("audio[controls]", body).length === 1, "a playable audio player")
@@ -83,6 +83,19 @@ describe("a published note (AT-14)", () => {
     for (const url of urls) {
       assert.ok(resolves("notas/sobre-jardines", url), `${url} resolves to a built file`)
     }
+  })
+
+  test("plays a video inline, served from the site", () => {
+    const videos = selectAll("video", article("notas/sobre-jardines"))
+    assert.strictEqual(videos.length, 1)
+    const video = videos[0]
+    assert.ok("controls" in video.properties, "with native controls")
+    assert.ok("playsInline" in video.properties, "inline on phones, not forced fullscreen")
+    assert.ok(resolves("notas/sobre-jardines", String(video.properties.src)), "the video file is served")
+    assert.ok(
+      !selectAll("a", article("notas/sobre-jardines")).some((a) => /\.mp4$/.test(String(a.properties.href))),
+      "not offered as a download link",
+    )
   })
 
   test("downloads skip Quartz's page router", () => {

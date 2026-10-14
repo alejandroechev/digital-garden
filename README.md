@@ -34,6 +34,9 @@ Front matter: `title`, `slug` (frozen at first publish, so URLs never change),
 - **"Publicado el … · actualizado el …"** — `quartz/components/NoteDates.tsx`,
   in Chile's time zone.
 - **Photo gallery** — consecutive photos form a grid (`quartz/styles/custom.scss`).
+- **Video** — ScratchPad writes `<video controls playsinline>`, already stripped of
+  its location; it plays inline at full width. Files over 25 MB never get here:
+  ScratchPad refuses them, because Cloudflare Pages rejects them.
 
 ## Develop
 
@@ -45,7 +48,7 @@ npm run check        # tsc + prettier
 ```
 
 `tests/fixtures/notas/` is real ScratchPad output (v0.23.0 renderer): a note
-with wiki links, a checklist, two photos, a voice note and a PDF; a renamed
+with wiki links, a checklist, two photos, a voice note, a video and a PDF; a renamed
 note; and a republished one. `tests/site.test.ts` builds it and checks the
 pages readers get.
 
