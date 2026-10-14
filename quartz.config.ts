@@ -2,53 +2,52 @@ import { QuartzConfig } from "./quartz/cfg"
 import * as Plugin from "./quartz/plugins"
 
 /**
- * Quartz 4 Configuration
+ * fractalpod.com — the public Blog that Scratchpad publishes to.
  *
- * See https://quartz.jzhao.xyz/configuration for more information.
+ * Scratchpad writes notes to content/notas/ (one <slug>.md plus a <slug>/
+ * folder of attachments). Everything else here is the site's own.
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Quartz 4",
-    pageTitleSuffix: "",
+    pageTitle: "Fractalpod",
+    pageTitleSuffix: " · Fractalpod",
     enableSPA: true,
     enablePopovers: true,
-    analytics: {
-      provider: "plausible",
-    },
-    locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
+    analytics: null,
+    locale: "es-ES",
+    baseUrl: "fractalpod.com",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,
       typography: {
-        header: "Schibsted Grotesk",
-        body: "Source Sans Pro",
+        header: "Literata",
+        body: "Literata",
         code: "IBM Plex Mono",
       },
       colors: {
         lightMode: {
-          light: "#faf8f8",
-          lightgray: "#e5e5e5",
-          gray: "#b8b8b8",
-          darkgray: "#4e4e4e",
-          dark: "#2b2b2b",
-          secondary: "#284b63",
-          tertiary: "#84a59d",
-          highlight: "rgba(143, 159, 169, 0.15)",
-          textHighlight: "#fff23688",
+          light: "#faf1dd",
+          lightgray: "#e6dcc4",
+          gray: "#9a8f78",
+          darkgray: "#3d3a33",
+          dark: "#1f1d19",
+          secondary: "#2f6690",
+          tertiary: "#7a9e7e",
+          highlight: "rgba(47, 102, 144, 0.10)",
+          textHighlight: "#f2d27a88",
         },
         darkMode: {
-          light: "#161618",
-          lightgray: "#393639",
-          gray: "#646464",
-          darkgray: "#d4d4d4",
-          dark: "#ebebec",
-          secondary: "#7b97aa",
-          tertiary: "#84a59d",
-          highlight: "rgba(143, 159, 169, 0.15)",
-          textHighlight: "#b3aa0288",
+          light: "#1b1a17",
+          lightgray: "#3a3730",
+          gray: "#7d7564",
+          darkgray: "#ddd5c3",
+          dark: "#f3ecdc",
+          secondary: "#8bb4d6",
+          tertiary: "#9cbf9f",
+          highlight: "rgba(139, 180, 214, 0.12)",
+          textHighlight: "#b3940288",
         },
       },
     },
@@ -66,9 +65,13 @@ const config: QuartzConfig = {
         },
         keepBackground: false,
       }),
+      // Must run before Obsidian-flavored Markdown turns [[links]] into anchors.
+      Plugin.ScratchpadLinks(),
       Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
       Plugin.GitHubFlavoredMarkdown(),
       Plugin.TableOfContents(),
+      // After OFM parses raw HTML (<audio>), before CrawlLinks resolves URLs.
+      Plugin.ScratchpadAttachments(),
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
@@ -88,8 +91,6 @@ const config: QuartzConfig = {
       Plugin.Static(),
       Plugin.Favicon(),
       Plugin.NotFoundPage(),
-      // Comment out CustomOgImages to speed up build time
-      Plugin.CustomOgImages(),
     ],
   },
 }

@@ -1,28 +1,35 @@
 import { PageLayout, SharedLayout } from "./quartz/cfg"
 import * as Component from "./quartz/components"
 
+const isHome = (slug: string | undefined) => slug === "index"
+
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
-  footer: Component.Footer({
-    links: {
-      GitHub: "https://github.com/jackyzha0/quartz",
-      "Discord Community": "https://discord.gg/cRFFHYye7t",
-    },
-  }),
+  afterBody: [
+    Component.ConditionalRender({
+      component: Component.RecentNotes({
+        title: "Notas recientes",
+        limit: 20,
+        showTags: false,
+        filter: (f) => f.slug?.startsWith("notas/") ?? false,
+      }),
+      condition: (page) => isHome(page.fileData.slug),
+    }),
+  ],
+  footer: Component.Footer({ links: {} }),
 }
 
 // components for pages that display a single page (e.g. a single note)
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
     Component.ConditionalRender({
-      component: Component.Breadcrumbs(),
-      condition: (page) => page.fileData.slug !== "index",
+      component: Component.Breadcrumbs({ rootName: "Inicio" }),
+      condition: (page) => !isHome(page.fileData.slug),
     }),
     Component.ArticleTitle(),
-    Component.ContentMeta(),
+    Component.NoteDates(),
     Component.TagList(),
   ],
   left: [
@@ -49,7 +56,11 @@ export const defaultContentPageLayout: PageLayout = {
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
-  beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
+  beforeBody: [
+    Component.Breadcrumbs({ rootName: "Inicio" }),
+    Component.ArticleTitle(),
+    Component.ContentMeta(),
+  ],
   left: [
     Component.PageTitle(),
     Component.MobileOnly(Component.Spacer()),

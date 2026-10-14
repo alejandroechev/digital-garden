@@ -1,18 +1,58 @@
-# Quartz v4
+# fractalpod.com — Blog
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+The public Blog that [ScratchPad](https://github.com/alejandroechev/scratchpad)
+publishes notes to. Built with [Quartz](https://quartz.jzhao.xyz) v4.5.2 (MIT,
+see `LICENSE.txt`) and hosted on Cloudflare Pages.
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
-Quartz v4 features a from-the-ground rewrite focusing on end-user extensibility and ease-of-use.
+## Who writes what
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+| Path             | Owner                                                                                                                |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `content/notas/` | **ScratchPad.** Every publish is one commit here. Don't edit by hand; changes are overwritten on the next republish. |
+| everything else  | This site: `content/index.md`, layout, styles, plugins.                                                              |
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+ScratchPad writes one note as:
 
-## Sponsors
+```
+content/notas/<slug>.md                    front matter + Markdown body
+content/notas/<slug>/<blob>-<name>.<ext>   its photos, voice notes and files
+```
 
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+Front matter: `title`, `slug` (frozen at first publish, so URLs never change),
+`version`, `date` (first publish), `updated` (this version) and `aliases`
+(the current title).
+
+## What the site adds to Quartz
+
+- **`[[Título]]` links** — `quartz/plugins/transformers/scratchpadLinks.ts`
+  resolves a link by title, alias or slug (ignoring accents and case), so a
+  link to a renamed note still reaches its original URL. A link to a note that
+  isn't published here renders as plain text.
+- **Attachments** — the same file rewrites ScratchPad's note-relative
+  `./<slug>/<file>` URLs so Quartz serves them, and sends downloads past the
+  SPA router.
+- **"Publicado el … · actualizado el …"** — `quartz/components/NoteDates.tsx`,
+  in Chile's time zone.
+- **Photo gallery** — consecutive photos form a grid (`quartz/styles/custom.scss`).
+
+## Develop
+
+```sh
+npm ci
+npm run serve        # http://localhost:8080
+npm test             # unit tests + a full build of tests/fixtures/notas
+npm run check        # tsc + prettier
+```
+
+`tests/fixtures/notas/` is real ScratchPad output (v0.23.0 renderer): a note
+with wiki links, a checklist, two photos, a voice note and a PDF; a renamed
+note; and a republished one. `tests/site.test.ts` builds it and checks the
+pages readers get.
+
+## Deploy
+
+Cloudflare Pages, production branch `main`:
+
+- Build command: `npx quartz build`
+- Output directory: `public`
+- Node version comes from `.node-version`.
