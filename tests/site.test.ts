@@ -91,9 +91,14 @@ describe("a published note (AT-14)", () => {
     const video = videos[0]
     assert.ok("controls" in video.properties, "with native controls")
     assert.ok("playsInline" in video.properties, "inline on phones, not forced fullscreen")
-    assert.ok(resolves("notas/sobre-jardines", String(video.properties.src)), "the video file is served")
     assert.ok(
-      !selectAll("a", article("notas/sobre-jardines")).some((a) => /\.mp4$/.test(String(a.properties.href))),
+      resolves("notas/sobre-jardines", String(video.properties.src)),
+      "the video file is served",
+    )
+    assert.ok(
+      !selectAll("a", article("notas/sobre-jardines")).some((a) =>
+        /\.mp4$/.test(String(a.properties.href)),
+      ),
       "not offered as a download link",
     )
   })
