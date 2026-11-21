@@ -2,7 +2,7 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 import { classNames } from "../util/lang"
 import { noteDatesText } from "../util/noteDates"
 
-/** "Publicado el … · actualizado el …" from the dates Scratchpad writes. */
+/** "Published … · updated …" from the dates Scratchpad writes. */
 const NoteDates: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
   const text = noteDatesText(fileData.frontmatter ?? {})
   return text ? <p class={classNames(displayClass, "note-dates")}>{text}</p> : null

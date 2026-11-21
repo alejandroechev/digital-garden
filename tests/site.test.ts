@@ -117,13 +117,13 @@ describe("a republished note (AT-16)", () => {
     const text = toString(page("notas/sobre-jardines"))
     assert.match(text, /MARCADOR-B/)
     assert.doesNotMatch(text, /MARCADOR-A/)
-    assert.match(text, /actualizado el/)
+    assert.match(text, /updated /)
   })
 
   test("a note published once has no update line", () => {
     const text = toString(page("notas/tiempo-profundo"))
-    assert.match(text, /Publicado el/)
-    assert.doesNotMatch(text, /actualizado el/)
+    assert.match(text, /Published /)
+    assert.doesNotMatch(text, /updated /)
   })
 })
 
@@ -165,6 +165,28 @@ describe("the home page", () => {
     const text = toString(page("index"))
     for (const title of ["Sobre jardines", "Tiempo profundo", "Título nuevo"]) {
       assert.match(text, new RegExp(title))
+    }
+  })
+})
+
+describe("the interface (in English)", () => {
+  test("the page is marked English and its chrome reads in English", () => {
+    const html = page("notas/tiempo-profundo")
+    const root = select("html", html)!
+    assert.match(String(root.properties.lang), /^en/)
+    assert.match(toString(select(".breadcrumb-container", html) ?? html), /Home/)
+    assert.doesNotMatch(toString(html), /Inicio|Notas recientes|Publicado el|Vista gráfica|Buscar/)
+  })
+
+  test("the home page has no tagline and lists recent notes in English", () => {
+    const text = toString(page("index"))
+    assert.doesNotMatch(text, /Notas, ideas y reflexiones/)
+    assert.match(text, /Recent notes/)
+  })
+
+  test("there is no graph view", () => {
+    for (const slug of ["index", "notas/sobre-jardines"]) {
+      assert.ok(!select(".graph", page(slug)), `${slug} has no graph`)
     }
   })
 })

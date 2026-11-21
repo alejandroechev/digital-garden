@@ -10,7 +10,7 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [
     Component.ConditionalRender({
       component: Component.RecentNotes({
-        title: "Notas recientes",
+        title: "Recent notes",
         limit: 20,
         showTags: false,
         filter: (f) => f.slug?.startsWith("notas/") ?? false,
@@ -25,7 +25,7 @@ export const sharedPageComponents: SharedLayout = {
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
     Component.ConditionalRender({
-      component: Component.Breadcrumbs({ rootName: "Inicio" }),
+      component: Component.Breadcrumbs({ rootName: "Home" }),
       condition: (page) => !isHome(page.fileData.slug),
     }),
     Component.ArticleTitle(),
@@ -47,17 +47,13 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.Explorer(),
   ],
-  right: [
-    Component.Graph(),
-    Component.DesktopOnly(Component.TableOfContents()),
-    Component.Backlinks(),
-  ],
+  right: [Component.DesktopOnly(Component.TableOfContents()), Component.Backlinks()],
 }
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [
-    Component.Breadcrumbs({ rootName: "Inicio" }),
+    Component.Breadcrumbs({ rootName: "Home" }),
     Component.ArticleTitle(),
     Component.ContentMeta(),
   ],

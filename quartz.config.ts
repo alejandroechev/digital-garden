@@ -14,7 +14,7 @@ const config: QuartzConfig = {
     enableSPA: true,
     enablePopovers: true,
     analytics: null,
-    locale: "es-ES",
+    locale: "en-US",
     baseUrl: "fractalpod.com",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
