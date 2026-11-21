@@ -17,7 +17,7 @@ Un enlace externo: https://example.com
 ![IMG_0001.jpg](./sobre-jardines/d8c6b520-img-0001.jpg)
 ![Atardecer en la playa.jpg](./sobre-jardines/75fff921-atardecer-en-la-playa.jpg)
 
-<video controls playsinline preload="metadata" src="./sobre-jardines/205368a3-paseo.mp4"></video>
+<video controls playsinline preload="metadata" poster="./sobre-jardines/205368a3-paseo.mp4.poster.jpg" src="./sobre-jardines/205368a3-paseo.mp4"></video>
 
 <audio controls preload="none" src="./sobre-jardines/d377c73f-nota-de-voz.wav"></audio>
 

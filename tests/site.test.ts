@@ -96,6 +96,10 @@ describe("a published note (AT-14)", () => {
       "the video file is served",
     )
     assert.ok(
+      resolves("notas/sobre-jardines", String(video.properties.poster)),
+      "its poster frame is served",
+    )
+    assert.ok(
       !selectAll("a", article("notas/sobre-jardines")).some((a) =>
         /\.mp4$/.test(String(a.properties.href)),
       ),
