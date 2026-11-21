@@ -9,8 +9,8 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Fractalpod",
-    pageTitleSuffix: " · Fractalpod",
+    pageTitle: "Fractal Pod",
+    pageTitleSuffix: " · Fractal Pod",
     enableSPA: true,
     enablePopovers: true,
     analytics: null,
@@ -28,11 +28,11 @@ const config: QuartzConfig = {
       },
       colors: {
         lightMode: {
-          light: "#faf1dd",
-          lightgray: "#e6dcc4",
-          gray: "#9a8f78",
-          darkgray: "#3d3a33",
-          dark: "#1f1d19",
+          light: "#fbf7ef",
+          lightgray: "#e7dfcf",
+          gray: "#8a7f6c",
+          darkgray: "#2b2925",
+          dark: "#222222",
           secondary: "#2f6690",
           tertiary: "#7a9e7e",
           highlight: "rgba(47, 102, 144, 0.10)",

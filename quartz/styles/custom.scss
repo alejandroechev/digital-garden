@@ -31,3 +31,125 @@ article video {
   max-height: 80vh;
   background: #000;
 }
+
+// ── "Paper Index": typography on warm paper, like a well-set book. ──
+
+// Home: a numbered index of essays under a quiet subtitle.
+.index-sub {
+  margin: -0.5rem 0 0;
+  color: var(--gray);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+body[data-slug="index"] .article-title {
+  font-weight: normal;
+  letter-spacing: 0.02em;
+}
+
+.recent-notes {
+  & > h3 {
+    margin-top: 2rem;
+    color: var(--gray);
+    font-size: 0.8rem;
+    font-weight: normal;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  & > ul.recent-ul {
+    counter-reset: entry;
+  }
+
+  & li.recent-li {
+    counter-increment: entry;
+    margin: 0;
+    padding: 0.9rem 0;
+    border-top: 1px solid var(--lightgray);
+
+    & .section {
+      display: grid;
+      grid-template-columns: 2.4rem 1fr;
+    }
+
+    & .section > * {
+      grid-column: 2;
+    }
+
+    & .section::before {
+      content: counter(entry, decimal-leading-zero);
+      grid-column: 1;
+      grid-row: 1 / span 3;
+      color: #b3a68d;
+      font-size: 0.8rem;
+      padding-top: 0.35rem;
+    }
+
+    & .desc h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: normal;
+    }
+
+    & a.internal {
+      background: none;
+      color: var(--dark);
+      font-weight: normal;
+      padding: 0;
+    }
+
+    & ul.tags:empty {
+      display: none;
+    }
+
+    & a.internal:hover {
+      color: var(--secondary);
+    }
+
+    & .meta {
+      margin: 0.15rem 0 0;
+      color: var(--gray);
+      font-size: 0.8rem;
+    }
+  }
+}
+
+// A note: book-like reading, a drop cap, quiet quotations.
+article {
+  font-size: 1.06rem;
+  line-height: 1.7;
+}
+
+body:not([data-slug="index"]) article > p:first-of-type:not(:has(img))::first-letter {
+  float: left;
+  font-size: 3.3em;
+  line-height: 0.9;
+  padding: 0.25rem 0.4rem 0 0;
+}
+
+.article-title {
+  font-weight: normal;
+  line-height: 1.15;
+}
+
+article blockquote {
+  margin: 1.5rem 0;
+  padding: 0 0 0 1rem;
+  border-left: 2px solid var(--dark);
+  font-style: italic;
+  background: none;
+}
+
+// The site name in the sidebar: quiet, like a book's running head.
+.page-title,
+.page-title a {
+  color: var(--dark);
+  font-weight: normal;
+  letter-spacing: 0.02em;
+}
+
+// The home page is the title page: its own heading names the site once.
+body[data-slug="index"] .page-title {
+  display: none;
+}
